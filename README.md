@@ -7,19 +7,30 @@ This repository contains the code and results for the paper *"Safe & Efficient S
 The repository includes:
 - Implementation of the PB inference methods discussed in the paper, including the CC, PPI, and PDC methods.
 - Code for the simulation studies.
-- Code to reproduce our UK Biobank Analysis. [Note: access to UK Biobank is required as the data cannot be publicly released.]
+- Code to reproduce our UK Biobank Analysis. [Note: Access to UK Biobank is required as the data cannot be publicly released.]
 
 ## Repository Structure
 
-Within the simulation folder:
+Within the *Scripts* folder:
+
+* `method_functions.R`: Contains functions for the PB inference methods methods 
+
+Within each of the *Simulation Studies* sub-folders:
 
 * `run_sim.R`: Script for running simulations
 * `simple_data_generation.R`: Contains functions for data generation
-* `method_functions.R`: Contains functions for the PB inference methods methods 
+* `plotting_functions.R`: Contains functions for plotting
+* `simulation_results.Rmd`: Markdown to replicate the simulation studies
+
+[Note: Additional R packages are required for plotting and parallelization in the markdown file.]
+
+Within the *Data* folder:
+
+* `example_data.csv`: Simple data to run the example at the end of this README file.
 
 ## Requirements
 
-Install the following R packages before running the methods code:
+Install the following R packages before running an analysis:
 
 ```r
 install.packages(c("dplyr", "tidyr", "lmtest", "sandwich"))
