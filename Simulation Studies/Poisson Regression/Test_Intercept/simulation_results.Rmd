@@ -1,0 +1,232 @@
+---
+title: "Poisson Regression Simulation"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# Set-up markdown preferences.
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
+knitr::opts_chunk$set(out.width='750px', dpi=200) 
+```
+
+```{r}
+# Libraries and functions for plotting.
+library(ggplot2)
+library(ggh4x)
+source('plotting_functions.R')
+```
+
+```{r}
+# Code for PBI method functions + data generation.
+source("../../Scripts/method_functions.R")
+source("simple_data_generation.R")
+```
+
+```{r}
+n_sim <- 500
+p <- 4
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
+library(doParallel)
+library(foreach)
+
+num_cores <- max(1, parallel::detectCores() - 1)
+cl <- suppressMessages(suppressWarnings({
+  makeCluster(num_cores)
+}))
+
+registerDoParallel(cl)
+```
+
+## Ideal Setting (FO Prediction)
+
+```{r}
+# Parameters for prediction generation.
+predset_ind <- 1 : p # Indices for covariates used for prediction.
+pred_noise <-  FALSE  # Indicator for prediction noise.
+noise_diff <- 0 # Amount of prediction noise. 
+dist_shift <- FALSE # Indicator for distribution shift.
+dist_shift_diff <- 0 # Amount of distribution shift. 
+dist_shift_type <- "both"
+
+total_var <- 0.8 # Sum of variances for prediction + inference covariates.
+```
+
+```{r}
+# Run simulation.
+param_seq <- seq(0.1, 1.5, by = 0.2)
+all_results <- vector("list", length(param_seq))
+save_results <- vector("list", length(param_seq))
+  
+for(i in 1: length(param_seq)){
+  
+  ratio_var <- param_seq[i]
+  source('run_sim.R')
+  
+  summary_df$param <- ratio_var 
+  all_results[[i]] <- summary_df
+  
+  sim_result$param <- ratio_var
+  save_results[[i]] <- sim_result
+ 
+}
+
+setting <- 0
+final_results <- bind_rows(save_results)
+write.csv(final_results, file = paste0("poisson_setting_", setting, ".csv"))
+```
+
+```{r fig.width = 12}
+df <- bind_rows(all_results)
+x_title <- expression(Variance~Ratio*","~frac(sigma[bold(X)[2]]^2, sigma[bold(X)[1]]^2))
+my_plot <- plot_results(df,  x_title = x_title)
+ggsave(paste0("sim_setting_", setting, ".png"), my_plot, width = 3000, height = 1000, units = "px")
+my_plot
+```
+
+
+## DS Setting (X1-S Prediction)  
+
+```{r}
+# Parameters for prediction generation.
+predset_ind <- 1 : p # Indices for covariates used for prediction.
+pred_noise <-  FALSE  # Indicator for prediction noise.
+noise_diff <- 0 # Amount of prediction noise. 
+dist_shift <- TRUE # Indicator for distribution shift.
+dist_shift_type <- "x1-only"
+
+total_var <- 0.8
+ratio_var <- 1
+```
+
+```{r}
+# Run simulation.
+param_seq <-  seq(0, 0.8, by = 0.2)
+all_results <- vector("list", length(param_seq))
+save_results <- vector("list", length(param_seq))
+
+
+for(i in 1: length(param_seq)){
+  
+  dist_shift_diff <- param_seq[i]
+  source('run_sim.R')
+  
+  summary_df$param <- dist_shift_diff
+  all_results[[i]] <- summary_df
+ 
+  sim_result$param <- dist_shift_diff
+  save_results[[i]] <- sim_result
+}
+
+setting <- 3
+final_results <- bind_rows(save_results)
+write.csv(final_results, file = paste0("poisson_setting_", setting, ".csv"))
+```
+
+```{r fig.width = 12}
+df <- bind_rows(all_results)
+x_title <- expression(Distribution~Shift*","~"||"*bold(beta)[1] - bold(theta)[1]*"||")
+my_plot <- plot_results(df,  x_title = x_title, trans_type = "not-log")
+ggsave(paste0("sim_setting_", setting, ".png"), my_plot, width = 3000, height = 1000, units = "px")
+my_plot
+```
+
+
+## DS Setting (X2-S Prediction)  
+
+```{r}
+# Parameters for prediction generation.
+predset_ind <- 1 : p # Indices for covariates used for prediction.
+pred_noise <-  FALSE  # Indicator for prediction noise.
+noise_diff <- 0 # Amount of prediction noise. 
+dist_shift <- TRUE # Indicator for distribution shift.
+dist_shift_type <- "x2-only"
+
+total_var <- 0.8
+ratio_var <- 1
+```
+
+```{r}
+# Run simulation.
+param_seq <-  seq(0, 0.8, by = 0.2)
+all_results <- vector("list", length(param_seq))
+save_results <- vector("list", length(param_seq))
+
+for(i in 1: length(param_seq)){
+  
+  dist_shift_diff <- param_seq[i]
+  source('run_sim.R')
+  
+  summary_df$param <- dist_shift_diff
+  all_results[[i]] <- summary_df
+  
+  sim_result$param <- dist_shift_diff
+  save_results[[i]] <- sim_result
+ 
+}
+
+setting <- 4
+final_results <- bind_rows(save_results)
+write.csv(final_results, file = paste0("poisson_setting_", setting, ".csv"))
+```
+
+```{r fig.width = 12}
+df <- bind_rows(all_results)
+x_title <- expression(Distribution~Shift*","~"||"*bold(beta)[2] - bold(theta)[2]*"||")
+my_plot <- plot_results(df, x_title = x_title, trans_type = "not-log")
+ggsave(paste0("sim_setting_", setting, ".png"), my_plot, width = 3000, height = 1000, units = "px")
+my_plot
+```
+
+
+##  DS Setting (X1,X2-S Prediction)  
+
+```{r}
+# Parameters for prediction generation.
+predset_ind <- 1 : p # Indices for covariates used for prediction.
+pred_noise <-  FALSE  # Indicator for prediction noise.
+noise_diff <- 0 # Amount of prediction noise. 
+dist_shift <- TRUE # Indicator for distribution shift.
+dist_shift_type <- "both"
+
+total_var <- 0.8
+ratio_var <- 1
+```
+
+```{r fig.width = 12}
+# Run simulation.
+param_seq <-  seq(0, 0.6, by = 0.15)
+all_results <- vector("list", length(param_seq))
+save_results <- vector("list", length(param_seq))
+
+for(i in 1: length(param_seq)){
+  
+  dist_shift_diff <- param_seq[i]
+  source('run_sim.R')
+  
+  summary_df$param <- dist_shift_diff
+  all_results[[i]] <- summary_df
+  
+  sim_result$param <- dist_shift_diff
+  save_results[[i]] <- sim_result
+ 
+}
+
+setting <- 5
+final_results <- bind_rows(save_results)
+write.csv(final_results, file = paste0("poisson_setting_", setting, ".csv"))
+```
+
+```{r fig.width = 12}
+df <- bind_rows(all_results)
+x_title <- expression(Distribution~Shift*","~"||"*bold(beta)[1] - bold(theta)[1]*"||=||"*bold(beta)[2] - bold(theta)[2]*"||")
+my_plot <- plot_results(df, x_title = x_title, trans_type = "not-log")
+ggsave(paste0("sim_setting_", setting, ".png"), my_plot, width = 3000, height = 1000, units = "px")
+my_plot
+```
+
+
+
+
+

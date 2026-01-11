@@ -81,7 +81,7 @@ write.csv(final_results, file = paste0("poisson_setting_", setting, ".csv"))
 df <- bind_rows(all_results)
 x_title <- expression(Variance~Ratio*","~frac(sigma[bold(X)[2]]^2, sigma[bold(X)[1]]^2))
 my_plot <- plot_results(df,  x_title = x_title)
-ggsave(paste0("sim_setting_", setting, ".png"), my_plot, width = 3000, height = 1000, units = "px")
+ggsave(paste0("poisson_sim_setting_", setting, ".png"), my_plot, width = 3000, height = 1000, units = "px")
 my_plot
 ```
 
@@ -128,7 +128,7 @@ write.csv(final_results, file = paste0("poisson_setting_", setting, ".csv"))
 df <- bind_rows(all_results)
 x_title <- expression(Distribution~Shift*","~"||"*bold(beta)[1] - bold(theta)[1]*"||")
 my_plot <- plot_results(df,  x_title = x_title, trans_type = "not-log")
-ggsave(paste0("sim_setting_", setting, ".png"), my_plot, width = 3000, height = 1000, units = "px")
+ggsave(paste0("poisson_sim_setting_", setting, ".png"), my_plot, width = 3000, height = 1000, units = "px")
 my_plot
 ```
 
@@ -175,7 +175,7 @@ write.csv(final_results, file = paste0("poisson_setting_", setting, ".csv"))
 df <- bind_rows(all_results)
 x_title <- expression(Distribution~Shift*","~"||"*bold(beta)[2] - bold(theta)[2]*"||")
 my_plot <- plot_results(df, x_title = x_title, trans_type = "not-log")
-ggsave(paste0("sim_setting_", setting, ".png"), my_plot, width = 3000, height = 1000, units = "px")
+ggsave(paste0("poisson_sim_setting_", setting, ".png"), my_plot, width = 3000, height = 1000, units = "px")
 my_plot
 ```
 
@@ -222,7 +222,7 @@ write.csv(final_results, file = paste0("poisson_setting_", setting, ".csv"))
 df <- bind_rows(all_results)
 x_title <- expression(Distribution~Shift*","~"||"*bold(beta)[1] - bold(theta)[1]*"||=||"*bold(beta)[2] - bold(theta)[2]*"||")
 my_plot <- plot_results(df, x_title = x_title, trans_type = "not-log")
-ggsave(paste0("sim_setting_", setting, ".png"), my_plot, width = 3000, height = 1000, units = "px")
+ggsave(paste0("poisson_sim_setting_", setting, ".png"), my_plot, width = 3000, height = 1000, units = "px")
 my_plot
 ```
 
