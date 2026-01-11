@@ -7,8 +7,9 @@ This repository contains the code and results for the paper *"Safe & Efficient S
 The repository includes:
 - Implementation of the PB inference methods discussed in the paper, including the CC, PPI, and PDC methods.
 - Code for the simulation studies.
-- Code to reproduce our UK Biobank Analysis.
-[Note: Access to UK Biobank is required as the data cannot be publicly released.]
+- Code to reproduce our UK Biobank (UKBB) Analysis.
+- 
+[Note: Access to the UKBB is required as the data cannot be publicly released.]
 
 ## Repository Structure
 
