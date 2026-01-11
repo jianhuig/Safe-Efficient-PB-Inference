@@ -32,7 +32,7 @@ Within the *Data* folder:
 
 ## Requirements
 
-Install the following R packages before running an analysis:
+Install the following R packages before running an analysis.
 
 ```r
 install.packages(c("dplyr", "tidyr", "lmtest", "sandwich"))
@@ -41,7 +41,7 @@ install.packages(c("dplyr", "tidyr", "lmtest", "sandwich"))
 
 ## Example
 
-Below is a simple demonstration of how to run the code.
+Below is a simple demonstration of how to run an analysis.
 
 ```r
 # Load analysis functions.
