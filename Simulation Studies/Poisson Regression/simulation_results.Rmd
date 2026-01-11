@@ -4,16 +4,22 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
+# Set-up markdown preferences.
 knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
 knitr::opts_chunk$set(out.width='750px', dpi=200) 
+```
+
+```{r}
+# Libraries and functions for plotting.
 library(ggplot2)
 library(ggh4x)
 source('plotting_functions.R')
-options(
-  tibble.print_max = Inf,   # show all rows
-  tibble.print_min = Inf,   # show all rows
-  tibble.width = Inf        # show all columns
-)
+```
+
+```{r}
+# Code for PBI method functions + data generation.
+source("../../Scripts/method_functions.R")
+source("simple_data_generation.R")
 ```
 
 ```{r}

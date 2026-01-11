@@ -1,10 +1,3 @@
-# Code for PBI method functions + data generation. 
-setwd('~/Documents/GitHub/PBI-Workplace/01-04-26/Cleaned Code Poisson')
-source('method_functions.R')
-
-setwd('~/Documents/GitHub/PBI-Workplace/01-04-26/Cleaned Code Poisson')
-source('simple_data_generation.R')
-
 # Libraries for parallelization.
 library(foreach)
 library(doParallel)

@@ -17,9 +17,9 @@ source('plotting_functions.R')
 ```
 
 ```{r}
-# Code for PBI method functions + data generation. 
-source('method_functions.R')
-source('simple_data_generation.R')
+# Code for PBI method functions + data generation.
+source("../../Scripts/method_functions.R")
+source("simple_data_generation.R")
 ```
 
 ```{r}
